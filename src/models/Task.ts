@@ -10,4 +10,6 @@ const taskSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("assignment_kirti", taskSchema);
+const Task = mongoose.model("assignment_kirti", taskSchema);
+
+export default Task;
