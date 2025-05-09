@@ -16,9 +16,19 @@ mongoose
   });
 
 export const saveTasks = async (tasks: string[]) => {
-  await Task.insertMany(tasks.map((text) => ({ text })));
+  try {
+    const formattedTasks = tasks.map((text) => ({ text }));
+    await Task.insertMany(formattedTasks);
+  } catch (error) {
+    throw new Error("Error saving tasks to MongoDB");
+  }
 };
 
 export const fetchMongoTasks = async (): Promise<{ text: string }[]> => {
-  return Task.find().lean();
+  try {
+    const tasks = await Task.find().lean();
+    return tasks;
+  } catch (error) {
+    throw new Error("Failed to fetch tasks from MongoDB");
+  }
 };

@@ -24,19 +24,28 @@ redisClient
   });
 
 export const getTasks = async (): Promise<string[]> => {
-  const data = await redisClient.get("FULLSTACK_TASK_kirti");
-  return data ? JSON.parse(data) : [];
+  try {
+    const data = await redisClient.get("FULLSTACK_TASK_kirti");
+    const parsed = data ? JSON.parse(data) : [];
+    return parsed;
+  } catch (error) {
+    throw new Error("Failed to retrieve tasks from Redis");
+  }
 };
 
 export const addTask = async (task: string): Promise<void> => {
-  const tasks = await getTasks();
-  tasks.push(task);
+  try {
+    const tasks = await getTasks();
+    tasks.push(task);
 
-  if (tasks.length > 10) {
-    const mongo = await import("./mongoService");
-    await mongo.saveTasks(tasks);
-    await redisClient.del("FULLSTACK_TASK_kirti");
-  } else {
-    await redisClient.set("FULLSTACK_TASK_kirti", JSON.stringify(tasks));
+    if (tasks.length >= 5) {
+      const mongo = await import("./mongoService");
+      await mongo.saveTasks(tasks);
+      await redisClient.del("FULLSTACK_TASK_kirti");
+    } else {
+      await redisClient.set("FULLSTACK_TASK_kirti", JSON.stringify(tasks));
+    }
+  } catch (error) {
+    throw new Error("Failed to add task");
   }
 };
