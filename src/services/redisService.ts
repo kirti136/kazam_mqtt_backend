@@ -38,7 +38,7 @@ export const addTask = async (task: string): Promise<void> => {
     const tasks = await getTasks();
     tasks.push(task);
 
-    if (tasks.length >= 5) {
+    if (tasks.length >= 50) {
       const mongo = await import("./mongoService");
       await mongo.saveTasks(tasks);
       await redisClient.del("FULLSTACK_TASK_kirti");
