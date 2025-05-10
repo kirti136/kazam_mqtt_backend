@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node /dist/index.js",
+    "start": "nodemon src/index.ts",
+    "dev": "node /dist/index.js",
     "stage": "tsc && git status && git add ."
   },
   "repository": {
