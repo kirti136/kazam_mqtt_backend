@@ -2,12 +2,9 @@
   "name": "kazam_mqtt_backend",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "index.js",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/index.js",
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "postinstall": "npm install"
+    "start": "nodemon dist/index.js"
   },
   "repository": {
     "type": "git",
