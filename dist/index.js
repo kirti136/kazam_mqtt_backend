@@ -10,7 +10,13 @@ const taskRoutes_1 = __importDefault(require("./routes/taskRoutes"));
 require("./services/mqttService");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)());
+const corsOptions = {
+    origin: true,
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+};
+app.use((0, cors_1.default)(corsOptions));
 app.use(express_1.default.json());
 app.use("/api", taskRoutes_1.default);
 app.get("/", (req, res) => {

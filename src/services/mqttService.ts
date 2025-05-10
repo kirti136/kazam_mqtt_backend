@@ -8,11 +8,11 @@ const client = mqtt.connect(process.env.MQTT_BROKER!);
 
 client.on("connect", () => {
   console.log("✅ MQTT connected");
-  client.subscribe("/add");
+  client.subscribe("/add/kirti");
 });
 
 client.on("message", async (topic, message) => {
-  if (topic === "/add") {
+  if (topic === "/add/kirti") {
     await addTask(message.toString());
   }
 });
